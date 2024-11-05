@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Radish.AssetManagement;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,11 +9,11 @@ namespace Radish.VContainer
     /// Asset that references a game state object.
     /// </summary>
     [PublicAPI]
-    [CreateAssetMenu(menuName = RadishConsts.MenuPrefix + "Game State Asset", order = RadishConsts.MenuOrder)]
+    [CreateAssetMenu(menuName = RadishConsts.MenuPrefix + "VContainer/Game State Asset", order = RadishConsts.MenuOrder)]
     public class GameStateAsset : ScriptableObject
     {
-        [SerializeField] private SoftAssetReference<GameObject> m_GameStatePrefab;
-        public SoftAssetReference<GameObject> gameStatePrefab => m_GameStatePrefab;
+        [SerializeField] private GameObject m_GameStatePrefab;
+        public GameObject gameStatePrefab => m_GameStatePrefab;
         
         [FormerlySerializedAs("m_Extensions")] 
         [SerializeReference] private List<IGameStateExtensionData> m_ExtraData = new();

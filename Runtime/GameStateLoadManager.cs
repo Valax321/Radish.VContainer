@@ -15,10 +15,10 @@ namespace Radish.VContainer
     /// Class to manage the loading of game states asynchronously.
     /// </summary>
     [PublicAPI]
-    public class GameStateController : MonoBehaviour
+    public class GameStateLoadManager : MonoBehaviour
     {
         public delegate UniTask StateLoadedCallback(GameStateAsset gameState);
-        public delegate void StateLoadedSyncCallback(GameStateAsset gameState);
+        public delegate void StateLoadedSyncCallback(SoftAssetReference<GameStateAsset> gameState);
         
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         
@@ -77,9 +77,9 @@ namespace Radish.VContainer
         /// </summary>
         /// <param name="gameState">The state to load.</param>
         [PublicAPI]
-        public async UniTask LoadStateAsync(GameStateAsset gameState)
+        public async UniTask LoadStateAsync(SoftAssetReference<GameStateAsset> gameState)
         {
-            if (!gameState)
+            if (gameState is null)
                 throw new ArgumentNullException(nameof(gameState));
             
             if (m_IsLoadingState)
@@ -94,24 +94,18 @@ namespace Radish.VContainer
             
             await UnloadCurrentStateAsync();
             Debug.Assert(!m_CurrentState);
-
-            var path = BuildResourcesManifest.instance.GetResourcePathForAsset(gameState.gameStatePrefab);
-            if (string.IsNullOrEmpty(path))
-            {
-                Logger.Error(this, "Failed to get path for {0}", gameState.gameStatePrefab);
-                m_IsLoadingState = false;
-                return;
-            }
-
-            m_LastStateAsset = gameState;
-
-            var statePrefab = await Resources.LoadAsync<GameObject>(path) as GameObject;
-            if (!statePrefab)
+            
+            var load = gameState.LoadAsync();
+            await load;
+            if (!load.result)
             {
                 Logger.Error(this, "Failed to load game state prefab");
                 m_IsLoadingState = false;
                 return;
             }
+            m_LastStateAsset = load.result;
+
+            var statePrefab = load.result.gameStatePrefab;
             
             // As of 6000.0.7, InstantiateAsync() will not work with ISerializationCallbackReceiver,
             // so we don't want to use it until this is fixed.
@@ -122,7 +116,7 @@ namespace Radish.VContainer
 #endif
             DontDestroyOnLoad(m_CurrentState.gameObject);
             m_CurrentState.gameObject.name = $"<{statePrefab.name}>";
-
+            
             for (var i = 0; i < m_CurrentState.GetComponentCount(); ++i)
             {
                 var cmp = m_CurrentState.GetComponentAtIndex(i);
@@ -135,7 +129,8 @@ namespace Radish.VContainer
                 await gsb.InitializeComponentsAsync();
             }
             
-            await StateLoaded(gameState);
+            Logger.Info("Brought up game state {0}", load.result.name);
+            await StateLoaded(load.result);
 
             m_IsLoadingState = false;
         }
