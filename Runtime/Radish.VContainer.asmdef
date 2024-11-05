@@ -14,15 +14,9 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [
-        "PROJECT_HAS_VCONTAINER",
         "PROJECT_HAS_UNITASK"
     ],
     "versionDefines": [
-        {
-            "name": "jp.hadashikick.vcontainer",
-            "expression": "1.13.1",
-            "define": "PROJECT_HAS_VCONTAINER"
-        },
         {
             "name": "com.cysharp.unitask",
             "expression": "2.5.4",

@@ -1,12 +1,14 @@
 {
-  "name": "com.radish.common-tools.vcontainer",
-  "displayName": "Radish Common Tools - VContainer",
-  "author": {
-    "name": "Audrey Castillo"
-  },
-  "version": "3.2.0",
-  "unity": "2022.3",
-  "description": "VContainer module for Radish Common Tools",
+  "name": "com.radish.vcontainer",
+  "displayName": "Radish VContainer Extensions",
+    "author": {
+        "name": "Audrey Castillo",
+        "email": "valax321@gmail.com",
+        "url": "https://audrey.zone"
+    },
+  "version": "1.0.0",
+  "unity": "6000.0",
+  "description": "VContainer extensions for Radish games.",
   "keywords": [
     "VContainer",
     "Dependency Injection",
@@ -16,13 +18,10 @@
   "category": "Editor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Valax321/RadishTools.VContainer.git"
+    "url": "https://github.com/Valax321/Radish.VContainer.git"
   },
   "dependencies": {
-    "com.radish.common-tools": "4.0.0",
-    "jp.hadashikick.vcontainer": "1.14.0"
-  },
-  "publishConfig": {
-    "registry": "https://package.openupm.com"
+    "com.radish.core": "1.0.0",
+    "jp.hadashikick.vcontainer": "1.16.0"
   }
 }

@@ -1,15 +1,14 @@
-# Radish VContainer Tools
+# Radish.Core
 
-This repository provides the VContainer extension component of Radish Tools. The Common Tools package must be installed.
+VContainer extensions for Radish games.
 
-These tools supply a set of classes and components to accelerate building game frameworks around a Dependency Injection pattern using VContainer.
+## Installation
 
-## Usage
-In Packages folder:
+In your project's `Packages` folder:
+```bash
+git submodule add https://github.com/Valax321/Radish.VContainer.git com.radish.vcontainer
 ```
-git submodule add https://github.com/Valax321/RadishTools.VContainer.git com.radish.common-tools.vcontainer
-```
 
-## License
-This repository is available under the MIT license.
-
+## Dependencies
+- Radish.Core
+- [Optional] UniTask
