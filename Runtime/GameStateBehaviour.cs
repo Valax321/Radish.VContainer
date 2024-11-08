@@ -3,7 +3,9 @@
 using Cysharp.Threading.Tasks;
 #endif
 using JetBrains.Annotations;
+#if ODIN_INSPECTOR
 using Sirenix.OdinInspector;
+#endif
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -13,7 +15,11 @@ namespace Radish.VContainer
     [PublicAPI]
     public abstract class GameStateBehaviour : LifetimeScope
     {
+        #if ODIN_INSPECTOR
         [Title("Game State")]
+        #else
+        [Header("Game State")]
+        #endif
         [SerializeField] private List<RegisteredGameObject> m_Components = new();
         
         public virtual bool persistent => false;
