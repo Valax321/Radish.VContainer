@@ -3,6 +3,7 @@
 using Cysharp.Threading.Tasks;
 #endif
 using JetBrains.Annotations;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -12,7 +13,7 @@ namespace Radish.VContainer
     [PublicAPI]
     public abstract class GameStateBehaviour : LifetimeScope
     {
-        [Header("Game State")]
+        [Title("Game State")]
         [SerializeField] private List<RegisteredGameObject> m_Components = new();
         
         public virtual bool persistent => false;
